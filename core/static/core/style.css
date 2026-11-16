@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
 :root {
     --green-900: #063d27;
     --green-800: #085233;
@@ -33,9 +35,10 @@ body {
     color: var(--ink);
 
     background-color: var(--paper);
-    background-image: url("/static/images/backgrounds.webp");
+    background-image: url("/static/images/backgrounds.png");
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 
     line-height: 1.7;
@@ -58,27 +61,14 @@ img { max-width: 100%; }
     outline-offset: 2px;
     border-radius: 4px;
 }
-
-/* ---------- Masthead slideshow ---------- */
-
+ /*masthead navbar*/
 .masthead {
     position: relative;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
     color: var(--white);
     background: transparent;
 }
 
-.masthead-slides {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
+/* Slideshow */
 .masthead-slide {
     position: absolute;
     inset: 0;
@@ -87,26 +77,31 @@ img { max-width: 100%; }
     transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
 }
 
+/* Setiap gambar */
+.masthead-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateX(100%);
+    transition:
+        transform 1.2s ease-in-out,
+        opacity 1.2s ease-in-out;
+
+    background:
+        linear-gradient(
+        180deg,
+        rgba(6, 61, 39, 0.30) 0%,
+        rgba(6, 61, 39, 0.45) 100%
+    );
+}
+
 .masthead-slide img {
     position: absolute;
     inset: 0;
-    z-index: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.masthead-slide::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-        180deg,
-        rgba(3, 45, 30, 0.18) 0%,
-        rgba(3, 45, 30, 0.12) 45%,
-        rgba(3, 45, 30, 0.25) 100%
-    );
+    z-index: -1;
 }
 
 .masthead-slide.is-active {
@@ -119,6 +114,7 @@ img { max-width: 100%; }
     transform: translateX(-100%);
 }
 
+/* Konten di atas slideshow */
 .masthead > .topbar {
     position: relative;
     z-index: 5;
@@ -131,17 +127,31 @@ img { max-width: 100%; }
 
 .masthead > .hero {
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }
 
+.masthead-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(3, 45, 30, 0.30) 0%,
+        rgba(3, 45, 30, 0.20) 45%,
+        rgba(3, 45, 30, 0.40) 100%
+    );
+    z-index: 1;
+}
+/* Pita emas */
 .masthead::after {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 10;
     height: 6px;
+    z-index: 10;
+
     background: linear-gradient(
         90deg,
         var(--gold-500),
@@ -149,6 +159,7 @@ img { max-width: 100%; }
         var(--gold-500)
     );
 }
+
 /* ---------- Ikon media sosial ---------- */
 .topbar { padding: 0.7rem 0 0.2rem; }
 
@@ -456,7 +467,7 @@ img { max-width: 100%; }
     justify-content: center;
 
     background: rgba(30, 30, 30, 0.45);
-    backdrop-filter: none;
+    backdrop-filter: blur(3px);
 
     opacity: 0;
     visibility: hidden;
@@ -1380,7 +1391,7 @@ img { max-width: 100%; }
             rgba(6, 61, 39, 0.45) 0%,
             rgba(6, 61, 39, 0.58) 100%
         ),
-        url("../images/footer.webp") center top / cover no-repeat,
+        url("../images/footer.png") center top / cover no-repeat,
         var(--green-800);
 
     border-top: 5px solid var(--gold-500);
@@ -1538,6 +1549,20 @@ h1, h2, h3, h4,
 .nav-panel .dropdown-item,
 .hero-label {
     font-family: "Manrope", sans-serif;
+}
+
+/* ---------- Lapisan gambar ---------- */
+.masthead-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(3, 45, 30, 0.18) 0%,
+        rgba(3, 45, 30, 0.12) 45%,
+        rgba(3, 45, 30, 0.25) 100%
+    );
+    z-index: 1;
 }
 
 /* ---------- Topbar ---------- */
@@ -1881,10 +1906,6 @@ h1, h2, h3, h4,
         animation: none;
     }
 
-    .masthead-slide {
-        transition: none;
-    }
-
 }
 
 /* Mencegah halaman melebar ke samping */
@@ -1893,4 +1914,20 @@ body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
+}
+
+/* Membatasi area slideshow */
+.masthead {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.masthead-slides {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
 }

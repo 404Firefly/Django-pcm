@@ -43,9 +43,7 @@
                 src="{{ item.gambar_sampul.url }}"
                 alt="{{ item.judul }}"
                 class="detail-image"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
+                loading="lazy"
             >
         </a>
     </div>
@@ -83,7 +81,6 @@
                                     alt="{{ field.label }}"
                                     class="detail-image"
                                     loading="lazy"
-                                    decoding="async"
                                 >
                             </a>
                         </div>
@@ -170,7 +167,6 @@
                                     alt="{{ berita.judul }}"
                                     style="height: 160px; object-fit: cover;"
                                     loading="lazy"
-                                    decoding="async"
                                 >
                             {% endif %}
 

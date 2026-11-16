@@ -142,67 +142,27 @@ if (
 })();
 
 
-
-// Slideshow masthead
 document.addEventListener("DOMContentLoaded", function () {
     const slides = document.querySelectorAll(".masthead-slide");
 
     if (slides.length <= 1) return;
 
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
-
     let currentIndex = 0;
-    let slideTimer;
 
-    slides.forEach(function (slide, index) {
+    slides.forEach((slide, index) => {
         slide.classList.toggle("is-active", index === 0);
         slide.classList.remove("is-before");
     });
 
-    // Tidak menjalankan animasi otomatis jika pengguna
-    // mengaktifkan preferensi reduced motion.
-    if (reduceMotion) return;
-
     function nextSlide() {
-        const nextIndex = (currentIndex + 1) % slides.length;
-        const nextImage = slides[nextIndex].querySelector("img");
+        slides[currentIndex].classList.remove("is-active");
 
-        function activateSlide() {
-            slides[currentIndex].classList.remove("is-active");
-            slides[nextIndex].classList.add("is-active");
+        currentIndex = (currentIndex + 1) % slides.length;
 
-            currentIndex = nextIndex;
-
-            slideTimer = setTimeout(nextSlide, 6000);
-        }
-
-        if (!nextImage || nextImage.complete) {
-            activateSlide();
-            return;
-        }
-
-        // Meminta browser memuat gambar berikutnya
-        // ketika gambar tersebut akan ditampilkan.
-        nextImage.loading = "eager";
-
-        if (typeof nextImage.decode === "function") {
-            nextImage.decode()
-                .catch(function () {})
-                .then(activateSlide);
-        } else {
-            nextImage.addEventListener("load", activateSlide, {
-                once: true
-            });
-
-            nextImage.addEventListener("error", activateSlide, {
-                once: true
-            });
-        }
+        slides[currentIndex].classList.add("is-active");
     }
 
-    slideTimer = setTimeout(nextSlide, 6000);
+    setInterval(nextSlide, 6000);
 });
 
 //scrol navbar

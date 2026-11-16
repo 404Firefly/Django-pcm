@@ -18,10 +18,7 @@ class Command(BaseCommand):
                 f"Folder sumber tidak ditemukan: {source_dir}"
             )
 
-        files = sorted(
-            path for path in source_dir.rglob("*")
-            if path.is_file()
-        )
+        files = [path for path in source_dir.rglob("*") if path.is_file()]
 
         if not files:
             self.stdout.write(
@@ -32,11 +29,9 @@ class Command(BaseCommand):
         uploaded = 0
         skipped = 0
         failed = 0
-        total_size = 0
 
         for path in files:
             relative_path = path.relative_to(source_dir).as_posix()
-            file_size = path.stat().st_size
 
             try:
                 if default_storage.exists(relative_path):
@@ -50,14 +45,9 @@ class Command(BaseCommand):
                     default_storage.save(relative_path, File(file))
 
                 self.stdout.write(
-                    self.style.SUCCESS(
-                        f"[UPLOAD] {relative_path} "
-                        f"({file_size / 1024:.2f} KB)"
-                    )
+                    self.style.SUCCESS(f"[UPLOAD] {relative_path}")
                 )
-
                 uploaded += 1
-                total_size += file_size
 
             except Exception as error:
                 self.stdout.write(
@@ -68,15 +58,7 @@ class Command(BaseCommand):
                 failed += 1
 
         self.stdout.write("")
-        self.stdout.write("=" * 45)
-        self.stdout.write(
-            self.style.SUCCESS(f"Berhasil diunggah : {uploaded}")
-        )
-        self.stdout.write(f"Dilewati           : {skipped}")
-        self.stdout.write(
-            self.style.ERROR(f"Gagal              : {failed}")
-        )
-        self.stdout.write(
-            f"Total ukuran upload: {total_size / (1024 * 1024):.2f} MB"
-        )
-        self.stdout.write("=" * 45)
+        self.stdout.write(self.style.SUCCESS(
+            f"Selesai: {uploaded} berhasil, "
+            f"{skipped} dilewati, {failed} gagal."
+        ))
