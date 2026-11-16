@@ -47,12 +47,16 @@ class AmalUsahaAdmin(ModelAdmin):
     list_filter = ("bidang",)
 
 
+
 @admin.register(Berita)
 class BeritaAdmin(ModelAdmin):
     list_display = ("judul", "status", "tanggal_terbit")
     search_fields = ("judul", "slug", "isi")
     list_filter = ("status", "tanggal_terbit")
     prepopulated_fields = {"slug": ("judul",)}
+
+    date_hierarchy = "tanggal_terbit"
+
 
 
 @admin.register(Agenda)
@@ -69,15 +73,38 @@ class DokumenAdmin(ModelAdmin):
     list_filter = ("tanggal_unggah",)
 
 
+
 @admin.register(PesanMasuk)
 class PesanMasukAdmin(ModelAdmin):
     list_display = (
-        "nama", "email", "subjek", "sudah_dibaca", "waktu_kirim"
+        "nama",
+        "email",
+        "subjek",
+        "sudah_dibaca",
+        "waktu_kirim",
     )
+
     search_fields = ("nama", "email", "subjek", "pesan")
     list_filter = ("sudah_dibaca", "waktu_kirim")
-    readonly_fields = ("waktu_kirim",)
+    ordering = ("-waktu_kirim",)
 
+    # Seluruh field hanya bisa dilihat.
+    def get_readonly_fields(self, request, obj=None):
+        return tuple(
+            field.name for field in self.model._meta.fields
+        )
+
+    # Pesan tidak boleh ditambahkan melalui admin.
+    def has_add_permission(self, request):
+        return False
+
+    # Pesan tidak boleh diedit.
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    # Pesan tidak boleh dihapus.
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 @admin.register(TautanTerkait)
 class TautanTerkaitAdmin(ModelAdmin):
