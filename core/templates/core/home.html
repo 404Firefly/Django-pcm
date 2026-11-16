@@ -27,7 +27,7 @@
                         <div class="col-md-5 col-lg-4">
                             <figure class="ketua-figure">
                                 {% if ketua.foto %}
-                                    <img src="{{ ketua.foto.url }}" alt="Foto {{ ketua.nama }}" loading="lazy">
+                                    <img src="{{ ketua.foto.url }}" alt="Foto {{ ketua.nama }}" loading="lazy" decoding="async">
                                 {% else %}
                                     <div class="ketua-placeholder" aria-hidden="true">
                                         <i class="bi bi-person"></i>
@@ -137,7 +137,8 @@
                             {% if b.gambar_sampul %}
                                 <img src="{{ b.gambar_sampul.url }}"
                                      alt="{{ b.judul }}"
-                                     loading="lazy">
+                                     loading="lazy"
+                                     decoding="async">
                             {% else %}
                                 <span class="thumb-placeholder">
                                     <i class="bi bi-newspaper"></i>
@@ -199,7 +200,7 @@
                 {% for g in galeri %}
                     {% if g.gambar %}
                         <a class="galeri-item" href="{{ g.gambar.url }}" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ g.gambar.url }}" alt="{{ g.judul|default:'Dokumentasi kegiatan' }}" loading="lazy">
+                            <img src="{{ g.gambar.url }}" alt="{{ g.judul|default:'Dokumentasi kegiatan' }}" loading="lazy" decoding="async">
                             {% if g.judul %}
                                 <span class="galeri-cap">{{ g.judul }}</span>
                             {% endif %}
@@ -325,7 +326,7 @@
                     <article class="person-card">
                         <div class="person-photo">
                             {% if p.foto %}
-                                <img src="{{ p.foto.url }}" alt="Foto {{ p.nama }}" loading="lazy">
+                                <img src="{{ p.foto.url }}" alt="Foto {{ p.nama }}" loading="lazy" decoding="async">
                             {% else %}
                                 <i class="bi bi-person" aria-hidden="true"></i>
                             {% endif %}
@@ -390,6 +391,7 @@
                                         alt="{{ field.label }}"
                                         class="profile-image"
                                         loading="lazy"
+                                        decoding="async"
                                     >
                                 </a>
 

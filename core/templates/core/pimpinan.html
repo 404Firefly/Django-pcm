@@ -49,6 +49,7 @@
                                                     src="{{ entri.objek.foto.url }}"
                                                     alt="Foto {{ entri.objek.nama }}"
                                                     loading="lazy"
+                                                     decoding="async"
                                                 >
                                             {% else %}
                                                 <div class="ketua-placeholder">
@@ -100,6 +101,7 @@
                                                                         alt="{{ field.label }}"
                                                                         class="profile-image"
                                                                         loading="lazy"
+                                                                         decoding="async"
                                                                     >
                                                                 {% endif %}
 
