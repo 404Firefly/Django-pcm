@@ -1,5 +1,7 @@
 
 from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import PesanMasuk
 
 
@@ -17,3 +19,13 @@ class PesanMasukForm(forms.ModelForm):
                 and not field.choices
             )
         ]
+
+    def clean_pesan(self):
+        pesan = self.cleaned_data.get("pesan", "").strip()
+
+        if len(pesan) < 10:
+            raise ValidationError(
+                "Pesan minimal harus terdiri dari 10 karakter."
+            )
+
+        return pesan
